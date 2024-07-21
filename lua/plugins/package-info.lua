@@ -1,42 +1,69 @@
 return {
-  'vuki656/package-info.nvim',
-  lazy = true,
-  dependencies = {
-    'MunifTanjim/nui.nvim',
-    'nvim-telescope/telescope.nvim',
-  },
-  config = function()
-    require('package-info').setup()
-    -- Show dependency versions
-    vim.keymap.set({ "n" }, "<LEADER>ns", require("package-info").show, { silent = true, noremap = true })
+	"vuki656/package-info.nvim",
+	dependencies = {
+		"MunifTanjim/nui.nvim",
+	},
+	config = function()
+		local package_info = require("package-info")
+		package_info.setup({
+			colors = {
+				up_to_date = "237",
+				outdated = "173",
+			},
+			style = {
+				up_to_date = "| + ", -- Icon for up to date dependencies
+				outdated = "| - ", -- Icon for outdated dependencies
+			},
+			hide_up_to_date = true,
+		})
 
-    -- Hide dependency versions
-    vim.keymap.set({ "n" }, "<LEADER>nc", require("package-info").hide, { silent = true, noremap = true })
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>ns",
+			package_info.show,
+			{ silent = true, noremap = true, desc = "Show dependency version" }
+		)
 
-    -- Toggle dependency versions
-    vim.keymap.set({ "n" }, "<LEADER>nt", require("package-info").toggle, { silent = true, noremap = true })
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>nc",
+			package_info.hide,
+			{ silent = true, noremap = true, desc = "Hide dependency version" }
+		)
 
-    -- Update dependency on the line
-    vim.keymap.set({ "n" }, "<LEADER>nu", require("package-info").update, { silent = true, noremap = true })
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>nt",
+			package_info.toggle,
+			{ silent = true, noremap = true, desc = "Toggle dependency versions" }
+		)
 
-    -- Delete dependency on the line
-    vim.keymap.set({ "n" }, "<LEADER>nd", require("package-info").delete, { silent = true, noremap = true })
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>nu",
+			package_info.update,
+			{ silent = true, noremap = true, desc = "Update dependency on the line" }
+		)
 
-    -- Install a new dependency
-    vim.keymap.set({ "n" }, "<LEADER>ni", require("package-info").install, { silent = true, noremap = true })
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>nd",
+			package_info.delete,
+			{ silent = true, noremap = true, desc = "Delete dependency on the line" }
+		)
 
-    -- Install a different dependency version
-    vim.keymap.set({ "n" }, "<LEADER>np", require("package-info").change_version, { silent = true, noremap = true })
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>ni",
+			package_info.install,
+			{ silent = true, noremap = true, desc = "Install a new dependency" }
+		)
 
-    require("telescope").setup({
-      extensions = {
-        package_info = {
-          -- Optional theme (the extension doesn't set a default theme)
-          theme = "ivy",
-        },
-      },
-    })
-
-    require("telescope").load_extension("package_info")
-  end,
+		vim.keymap.set(
+			{ "n" },
+			"<LEADER>np",
+			package_info.change_version,
+			{ silent = true, noremap = true, desc = "Install a different dependency version" }
+		)
+	end,
 }
