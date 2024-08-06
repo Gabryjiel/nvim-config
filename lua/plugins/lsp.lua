@@ -80,7 +80,6 @@ return {
 					"lua_ls",
 					"cssls",
 					"intelephense",
-					"tsserver",
 				},
 				handlers = {
 					function(server)

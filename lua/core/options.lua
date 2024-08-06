@@ -1,5 +1,5 @@
 vim.opt.number = true
-vim.opt.signcolumn = 'yes'
+vim.opt.signcolumn = "yes"
 vim.opt.relativenumber = true
 
 vim.opt.colorcolumn = "81,121"
@@ -8,7 +8,7 @@ vim.opt.colorcolumn = "81,121"
 vim.opt.wrap = false
 
 vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 
 -- tabs & indent
 vim.o.tabstop = 2
@@ -27,19 +27,18 @@ vim.opt.undofile = true
 -- Case-insensitive searching UNLESS \C.opt. capital in search
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-vim.opt.hlsearch = false
 
 -- .opt.E: You should make sure your terminal supports this
 vim.opt.termguicolors = true
-vim.opt.background = 'dark'
+vim.opt.background = "dark"
 
-vim.opt.backspace = 'indent,eol,start'
+vim.opt.backspace = "indent,eol,start"
 
 vim.opt.list = true
-vim.opt.listchars = 'eol:↵,trail:~,tab:> ,nbsp:o'
+vim.opt.listchars = "eol:↵,trail:~,tab:> ,nbsp:o"
 vim.opt.scrolloff = 8
 
-vim.opt.clipboard:append('unnamedplus')
+vim.opt.clipboard:append("unnamedplus")
 
 vim.opt.swapfile = false
 
@@ -47,4 +46,3 @@ vim.opt.swapfile = false
 vim.cmd("highlight SpecialKey ctermbg=blue guibg=blue")
 vim.cmd("highlight ExtraWhitespace ctermbg=red guibg=red")
 vim.cmd("match ExtraWhitespace /\\s\\+$/")
-

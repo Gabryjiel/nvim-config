@@ -2,11 +2,11 @@ local lualine = require("lualine")
 
 lualine.setup({
 	options = {
-		theme = "catpuccin",
+		theme = "catppuccin",
 	},
 	sections = {
 		lualine_a = { "mode" },
-		lualine_b = { "filename" },
+		lualine_b = { "filename", "diagnostics" },
 		lualine_c = {},
 		lualine_x = {
 			{ "encoding" },
