@@ -80,6 +80,8 @@ return {
 					"lua_ls",
 					"cssls",
 					"intelephense",
+					"tsserver",
+					-- "volar",
 				},
 				handlers = {
 					function(server)
@@ -126,6 +128,21 @@ return {
 							settings = {
 								useFlatConfig = true,
 							},
+						})
+					end,
+					tsserver = function()
+						lspconfig.tsserver.setup({
+							capabilities = capabilities,
+							init_options = {
+								plugins = {
+									{
+										name = "@vue/typescript-plugin",
+										location = "/home/gabryjiel/.nvm/versions/node/v20.14.0/lib/node_modules/@vue/typescript-plugin",
+										languages = { "javascript", "typescript", "vue" },
+									},
+								},
+							},
+							filetypes = { "javascript", "typescript", "vue" },
 						})
 					end,
 				},

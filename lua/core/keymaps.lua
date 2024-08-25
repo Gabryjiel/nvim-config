@@ -51,7 +51,7 @@ vim.keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current bu
 
 vim.keymap.set(
 	"n",
-	"<C-l>",
+	"<leader>hl",
 	[[(&hls && v:hlsearch ? ':nohls' : ':set hls')."\n" <BAR> redraw<CR>]],
 	{ silent = true, expr = true, desc = "Toggle search highlighting" }
 )
