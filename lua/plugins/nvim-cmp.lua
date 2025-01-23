@@ -1,7 +1,7 @@
-return {
+--[[ return {
   {
     -- Autocompletion
-    'hrsh7th/nvim-cmp',
+    '/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -121,4 +121,69 @@ return {
       })
     end,
   },
+} ]]
+local MAX_ABBR_WIDTH = 30
+local MAX_MENU_WIDTH = 30
+
+return {
+	"yioneko/nvim-cmp",
+	branch = "perf",
+	event = "InsertEnter",
+	opts = function()
+		local cmp = require("cmp")
+
+		return {
+			mapping = {
+				["<c-n>"] = cmp.mapping.select_next_item(),
+				["<c-p>"] = cmp.mapping.select_prev_item(),
+				["<c-u>"] = cmp.mapping.scroll_docs(-4),
+				["<c-d>"] = cmp.mapping.scroll_docs(4),
+				["<c-y>"] = cmp.mapping.confirm({ select = true }),
+				["<c-e>"] = cmp.mapping.abort(),
+				["<c-Space>"] = cmp.mapping.complete(),
+			},
+			sources = cmp.config.sources({
+				{ name = "nvim_lsp" },
+				-- { name = "nvim_lsp_signature_help" },
+				{ name = "snippets" },
+				{ name = "path" },
+			}, {
+				{ name = "buffer", keyword_length = 4 },
+			}),
+			formatting = {
+				format = function(_, item)
+					if vim.api.nvim_strwidth(item.abbr) > MAX_ABBR_WIDTH then
+						item.abbr = vim.fn.strcharpart(item.abbr, 0, MAX_ABBR_WIDTH) .. "…"
+					end
+					if vim.api.nvim_strwidth(item.menu or "") > MAX_MENU_WIDTH then
+						item.menu = vim.fn.strcharpart(item.menu, 0, MAX_MENU_WIDTH) .. "…"
+					end
+					return item
+				end,
+			},
+			sorting = {
+				priority_weight = 2,
+				comparators = {
+					cmp.config.compare.offset,
+					cmp.config.compare.exact,
+					cmp.config.compare.score,
+					cmp.config.compare.recently_used,
+					cmp.config.compare.locality,
+					cmp.config.compare.kind,
+					cmp.config.compare.sort_text,
+					cmp.config.compare.order,
+				},
+			},
+		}
+	end,
+	dependencies = {
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-buffer",
+		"hrsh7th/cmp-nvim-lsp-signature-help",
+		"hrsh7th/cmp-path",
+		{
+			"garymjr/nvim-snippets",
+			opts = {},
+		},
+	},
 }

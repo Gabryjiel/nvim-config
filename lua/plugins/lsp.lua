@@ -38,6 +38,7 @@ return {
 					-- See `:help K` for why this keymap
 					nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 					nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+					nmap("<leader>fe", "<cmd>Format<cr>", "[F]ormat with LSP")
 
 					-- Lesser used LSP functionality
 					nmap("<leader>rs", ":LspRestart<CR>", "Restart LSP")
@@ -46,11 +47,11 @@ return {
 					nmap("<leader>wl", function()
 						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 					end, "[W]orkspace [L]ist Folders")
-					nmap("<leader>fe", ":EslintFixAll<CR>:w<CR>", "EslintFixAll")
 
 					-- Create a command `:Format` local to the LSP buffer
 					vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-						vim.lsp.buf.format()
+						vim.lsp.buf.format({ timeout_ms = 10000, async = true })
+						print("Formatted")
 					end, { desc = "Format current buffer with LSP" })
 				end,
 			})
@@ -80,7 +81,7 @@ return {
 					"lua_ls",
 					"cssls",
 					"intelephense",
-					"tsserver",
+					"ts_ls",
 					-- "volar",
 				},
 				handlers = {
@@ -106,6 +107,14 @@ return {
 							single_file_support = false,
 						})
 					end,
+					eslint = function()
+						lspconfig.eslint.setup({
+							capabilities = capabilities,
+							settings = {
+								useFlatConfig = true,
+							},
+						})
+					end,
 					["lua_ls"] = function()
 						lspconfig["lua_ls"].setup({
 							capabilities = capabilities,
@@ -122,16 +131,8 @@ return {
 							},
 						})
 					end,
-					eslint = function()
-						lspconfig.eslint.setup({
-							capabilities = capabilities,
-							settings = {
-								useFlatConfig = true,
-							},
-						})
-					end,
-					tsserver = function()
-						lspconfig.tsserver.setup({
+					["ts_ls"] = function()
+						lspconfig["ts_ls"].setup({
 							capabilities = capabilities,
 							init_options = {
 								plugins = {
@@ -142,7 +143,7 @@ return {
 									},
 								},
 							},
-							filetypes = { "javascript", "typescript", "vue" },
+							filetypes = { "javascript", "typescript", "vue", "typescriptreact", "javascriptreact" },
 						})
 					end,
 				},
