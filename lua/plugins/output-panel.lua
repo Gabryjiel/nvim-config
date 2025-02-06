@@ -10,10 +10,9 @@ return {
 	cmd = { "OutputPanel" },
 	keys = {
 		{
-			"<leader>sl",
+			"<leader>op",
 			vim.cmd.OutputPanel,
-			mode = "n",
-			desc = "[S]earch [L]sp",
+			desc = "[O]utput [P]anel",
 		},
 	},
 }
